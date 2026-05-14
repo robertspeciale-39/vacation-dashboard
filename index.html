@@ -1,183 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vacation Dashboard</title>
-  <style>:root {
-  --ink: #35291f;
-  --muted: #76675a;
-  --cream: #fff7e8;
-  --card: rgba(255, 255, 255, 0.82);
-  --gold: #f6c453;
-  --rose: #ff8fa3;
-  --sky: #6ecff6;
-  --teal: #4fb6a8;
-  --lavender: #b79ced;
-  --shadow: 0 24px 70px rgba(78, 52, 24, 0.16);
-}
-* { box-sizing: border-box; }
-body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: radial-gradient(circle at top left, #fff1bc, transparent 32rem), radial-gradient(circle at 80% 15%, #ffd3dc, transparent 24rem), linear-gradient(135deg, #fffaf0 0%, #edf9ff 48%, #fff4fb 100%); min-height: 100vh; }
-main { padding: 28px; }
-.app-shell { max-width: 1220px; margin: 0 auto; }
-.topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -0.03em; font-size: 1.25rem; }
-.search-box { flex: 1; max-width: 420px; background: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 10px 30px rgba(74, 50, 24, .08); border-radius: 999px; display: flex; align-items: center; gap: 10px; padding: 11px 16px; }
-.search-box input { border: 0; outline: 0; background: transparent; width: 100%; font-size: .95rem; color: var(--ink); }
-.card { background: var(--card); border: 1px solid rgba(255,255,255,.8); border-radius: 30px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
-.glow { position: relative; overflow: hidden; }
-.glow::after { content: ''; position: absolute; width: 210px; height: 210px; right: -70px; top: -70px; background: radial-gradient(circle, rgba(246,196,83,.55), transparent 68%); pointer-events: none; }
-.hero { display: grid; grid-template-columns: 1.35fr .65fr; gap: 24px; padding: 38px; margin-bottom: 30px; }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; font-size: .78rem; font-weight: 900; color: #9b5d00; letter-spacing: .12em; margin: 0 0 10px; }
-h1 { font-size: clamp(2.4rem, 5vw, 5rem); line-height: .95; margin: 0; letter-spacing: -0.08em; }
-.subtitle { color: var(--muted); font-size: 1.15rem; margin: 16px 0 24px; }
-.next-pill { display: inline-flex; align-items: center; gap: 10px; background: #fff4cd; color: #5e4212; border: 1px solid #ffe39b; padding: 12px 16px; border-radius: 999px; }
-.hero-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: center; position: relative; z-index: 1; }
-.stat { background: rgba(255,255,255,.7); border-radius: 24px; padding: 20px; text-align: center; }
-.stat strong { display: block; font-size: 2.15rem; }
-.stat span { color: var(--muted); font-size: .86rem; font-weight: 700; }
-.section { margin: 34px 0; }
-.section-title { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 0 0 16px; }
-.section-title h2 { margin: 0; font-size: 1.8rem; letter-spacing: -0.04em; }
-.section-title p { margin: 0; color: var(--muted); }
-.timeline-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.timeline-card { display: grid; grid-template-columns: 104px 1fr; gap: 14px; padding: 16px; border-radius: 26px; background: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.82); box-shadow: 0 15px 38px rgba(66,43,24,.09); }
-.date-badge { border-radius: 22px; background: linear-gradient(135deg, #fff, #fff2c8); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 90px; text-align: center; border: 1px solid #ffe2a0; }
-.date-badge span { font-weight: 950; font-size: 1.2rem; }
-.date-badge small { color: var(--muted); font-weight: 700; }
-.timeline-title { display: flex; align-items: center; gap: 9px; }
-.timeline-title h3 { margin: 0; font-size: 1.05rem; }
-ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
-li { margin: 5px 0; }
-.flight .date-badge { background: linear-gradient(135deg, #fff, #dff6ff); border-color: #bdeeff; }
-.hotel .date-badge, .resort .date-badge { background: linear-gradient(135deg, #fff, #ffe2ed); border-color: #ffc8d8; }
-.cruise .date-badge, .island .date-badge { background: linear-gradient(135deg, #fff, #dcfbf6); border-color: #b8eee6; }
-.excursion .date-badge, .port .date-badge { background: linear-gradient(135deg, #fff, #eee6ff); border-color: #d8c8ff; }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.stack { display: grid; gap: 18px; }
-.detail-card { padding: 22px; margin-bottom: 18px; }
-.detail-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.icon-bubble { width: 44px; height: 44px; border-radius: 16px; background: linear-gradient(135deg, #ffe89b, #ffc1d0); display: grid; place-items: center; }
-.detail-heading p { margin: 0 0 2px; color: #9b5d00; font-size: .78rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
-.detail-heading h3 { margin: 0; font-size: 1.2rem; }
-.detail-card p { color: var(--muted); line-height: 1.45; margin: 8px 0; }
-.detail-card strong { color: var(--ink); }
-.route { display: flex; justify-content: space-between; align-items: center; background: #f3fbff; border-radius: 18px; padding: 12px 14px; font-weight: 900; margin-bottom: 12px; color: #25637b; }
-.passengers, .family-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.passengers span, .family-grid span { background: #fff5d6; border: 1px solid #ffe6a4; color: #6a4910; padding: 8px 10px; border-radius: 999px; font-size: .84rem; font-weight: 800; }
-.mini-list { background: rgba(255,255,255,.45); border-radius: 18px; padding: 12px 12px 12px 32px; }
-.rooms { display: grid; gap: 12px; }
-.room { padding: 16px; border-radius: 22px; background: linear-gradient(135deg, #ecfffb, #fff); border: 1px solid #c8f3ed; }
-.room span { display: block; font-weight: 950; font-size: 1.1rem; }
-.room p { margin-bottom: 0; }
-.muted { color: var(--muted); font-size: .92rem; }
-@media (max-width: 900px) { main { padding: 18px; } .topbar, .hero, .two-col { grid-template-columns: 1fr; flex-direction: column; align-items: stretch; } .hero { padding: 28px; } .timeline-grid, .detail-grid { grid-template-columns: 1fr; } .section-title { align-items: start; flex-direction: column; } .search-box { max-width: none; } }
-@media (max-width: 560px) { .timeline-card { grid-template-columns: 1fr; } .hero-panel { grid-template-columns: 1fr 1fr; } .next-pill { border-radius: 22px; align-items: flex-start; } }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Speciale Family Vacation Dashboard</title>
+<style>
+:root{--ink:#33261c;--muted:#75675c;--cream:#fff7e8;--card:rgba(255,255,255,.86);--gold:#f6c453;--red:#d93b45;--blue:#1f5f9f;--sky:#79d2ff;--green:#58b88b;--shadow:0 22px 70px rgba(81,54,24,.16)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:radial-gradient(circle at top left,#fff0b8,transparent 31rem),radial-gradient(circle at 82% 12%,#ffd0d7,transparent 25rem),linear-gradient(135deg,#fffaf0 0%,#eefaff 50%,#fff4fb 100%);min-height:100vh}main{padding:28px}.app-shell{max-width:1240px;margin:0 auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:-.04em;font-size:1.25rem}.search-box{flex:1;max-width:430px;background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 30px rgba(74,50,24,.08);border-radius:999px;display:flex;align-items:center;gap:10px;padding:11px 16px}.search-box input{border:0;outline:0;background:transparent;width:100%;font-size:.95rem;color:var(--ink)}.card{background:var(--card);border:1px solid rgba(255,255,255,.86);border-radius:30px;box-shadow:var(--shadow);backdrop-filter:blur(16px)}.glow{position:relative;overflow:hidden}.glow:after{content:"";position:absolute;width:230px;height:230px;right:-74px;top:-74px;background:radial-gradient(circle,rgba(246,196,83,.58),transparent 68%);pointer-events:none}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;padding:38px;margin-bottom:24px}.eyebrow{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;font-size:.78rem;font-weight:950;color:#985700;letter-spacing:.12em;margin:0 0 10px}h1{font-size:clamp(2.3rem,5vw,4.8rem);line-height:.95;margin:0;letter-spacing:-.08em}.subtitle{color:var(--muted);font-size:1.15rem;margin:16px 0 22px}.next-pill{display:inline-flex;align-items:center;gap:10px;background:#fff3c8;color:#5e4212;border:1px solid #ffe19a;padding:12px 16px;border-radius:999px}.hero-panel{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:center;position:relative;z-index:1}.stat{background:rgba(255,255,255,.72);border-radius:24px;padding:20px;text-align:center}.stat strong{display:block;font-size:2.05rem}.stat span{color:var(--muted);font-size:.86rem;font-weight:800}.countdown-card{grid-column:1/-1;background:linear-gradient(135deg,#fff9dc,#fff);border:1px solid #ffe39b}.countdown-card strong{font-size:1.45rem}.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.count-box{background:#fff;border-radius:16px;padding:10px;text-align:center;border:1px solid #fff1bf}.count-box b{font-size:1.4rem;display:block;color:#a96500}.count-box span{font-size:.72rem;text-transform:uppercase;color:var(--muted);font-weight:900}.section{margin:34px 0}.section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}.section-title h2{font-size:2rem;letter-spacing:-.05em;margin:0}.section-title p{margin:0;color:var(--muted);font-weight:700}.progress-card{padding:28px;margin-bottom:28px}.progress-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.progress-track{height:16px;background:#fff;border-radius:999px;border:1px solid #ffe0a4;position:relative;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#f6c453,#d93b45,#1f5f9f);border-radius:999px;transition:width 1s ease;position:relative}.progress-fill:after{content:"✨";position:absolute;right:-8px;top:-11px;font-size:26px;animation:sparkle 1.4s infinite ease-in-out}.progress-labels{display:flex;justify-content:space-between;margin-top:10px;color:var(--muted);font-size:.8rem;font-weight:850}.today-card{padding:24px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,246,205,.88));border-radius:30px}.today-card h3{margin:0 0 8px;font-size:1.6rem;letter-spacing:-.04em}.today-card ul{margin:10px 0 0;padding-left:20px;color:var(--muted);line-height:1.55}.phase-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.phase-card{padding:22px;position:relative;overflow:hidden;min-height:190px}.phase-card.active{outline:3px solid #f6c453;background:linear-gradient(135deg,#fff5c8,#fff)}.phase-card .badge{display:inline-flex;padding:7px 11px;border-radius:999px;background:#fff0bd;color:#7c5100;font-weight:950;font-size:.72rem;text-transform:uppercase}.phase-card h3{font-size:1.35rem;letter-spacing:-.04em;margin:14px 0 6px}.phase-card p{color:var(--muted);line-height:1.45;margin:0}.phase-card .big-icon{font-size:2.2rem;position:absolute;right:18px;bottom:14px;opacity:.72}.timeline-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.timeline-card{display:grid;grid-template-columns:92px 1fr;gap:14px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.9);border-radius:26px;padding:16px;box-shadow:0 10px 32px rgba(74,50,24,.08)}.timeline-card.today{outline:3px solid #d93b45}.date-badge{border-radius:22px;background:#fff3ca;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:78px}.date-badge span{font-size:1.02rem;font-weight:950}.date-badge small{color:var(--muted);font-weight:800}.timeline-title{display:flex;gap:9px;align-items:center}.timeline-title h3{margin:0;font-size:1.08rem;letter-spacing:-.03em}.timeline-body ul{margin:9px 0 0;padding-left:18px;color:var(--muted);line-height:1.45}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px}.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.stack{display:grid;gap:16px}.detail-card{padding:22px}.detail-heading{display:flex;gap:12px;align-items:center;margin-bottom:14px}.detail-heading p{margin:0;color:var(--muted);font-weight:850;text-transform:uppercase;font-size:.74rem;letter-spacing:.08em}.detail-heading h3{margin:2px 0 0;font-size:1.25rem;letter-spacing:-.04em}.icon-bubble{width:48px;height:48px;border-radius:18px;background:#fff2c6;display:grid;place-items:center;font-size:1.4rem}.detail-card p{line-height:1.35}.route{display:flex;gap:14px;align-items:center;background:#eef8ff;border-radius:18px;padding:12px;font-weight:950;color:#1f5f9f}.passengers,.family-grid,.rooms{display:grid;gap:8px}.passengers span,.family-grid span,.room{background:rgba(255,255,255,.72);border-radius:16px;padding:10px;border:1px solid rgba(255,255,255,.9)}.room span{display:block;color:#1f5f9f;font-weight:950}.room p{margin:4px 0 0;color:var(--muted)}.mini-list{line-height:1.55;color:var(--muted)}.muted{color:var(--muted);font-size:.92rem}.footer-note{text-align:center;color:var(--muted);font-weight:700;margin:32px 0 10px}@keyframes sparkle{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.25) rotate(12deg)}}@media(max-width:980px){main{padding:18px}.hero,.two-col{grid-template-columns:1fr}.timeline-grid,.detail-grid,.phase-grid{grid-template-columns:1fr 1fr}.topbar{align-items:stretch;flex-direction:column}.search-box{max-width:none}.hero{padding:26px}}@media(max-width:640px){.hero-panel,.timeline-grid,.detail-grid,.phase-grid{grid-template-columns:1fr}.timeline-card{grid-template-columns:1fr}.countdown-grid{grid-template-columns:repeat(2,1fr)}.section-title{display:block}.progress-top{display:block}h1{font-size:2.6rem}}
 </style>
 </head>
-<body>
-<div id="root"></div>
+<body><div id="root"></div>
 <script>
-const trip = {
-  title: 'Speciale Family Vacation',
-  subtitle: 'Orlando • Adventure of the Seas • Resort Stay',
-  startDate: '2026-05-28',
-  endDate: '2026-06-10',
-  party: ['Robert', 'Barbara', 'Aurora', 'Veronica', 'Daniel'],
-  heroStats: [
-    { label: 'Travelers', value: '5' },
-    { label: 'Trip Days', value: '14' },
-    { label: 'Cruise Nights', value: '8' },
-    { label: 'Hotels', value: '2' }
-  ]
-};
-
-const timeline = [
-  { date: '2026-05-27', day: 'Wednesday', title: 'Final Prep Day', category: 'prep', items: ['Pack documents', 'Confirm transportation', 'Check flight status'] },
-  { date: '2026-05-28', day: 'Thursday', title: 'Fly to Orlando', category: 'flight', items: ['Southwest WN852: LAS 12:40 PM → MCO 8:15 PM', 'Check in at Orlando airport hotel after arrival'] },
-  { date: '2026-05-29', day: 'Friday', title: 'Cruise Departure', category: 'cruise', items: ['Check out of Orlando airport hotel', 'Cruise transportation package: MCO to Port Canaveral', 'Board Adventure of the Seas'] },
-  { date: '2026-05-30', day: 'Saturday', title: 'Perfect Day at CocoCay', category: 'island', items: ['Perfect Day at CocoCay'] },
-  { date: '2026-05-31', day: 'Sunday', title: 'At Sea', category: 'cruise', items: ['At sea day'] },
-  { date: '2026-06-01', day: 'Monday', title: 'San Juan', category: 'port', items: ['1:00 PM San Juan', 'All 5 going'] },
-  { date: '2026-06-02', day: 'Tuesday', title: 'Skyride + Magen’s Bay', category: 'excursion', items: ['8:30 AM Skyride', 'Drake’s Seat and Magen’s Bay', 'All 5 going'] },
-  { date: '2026-06-03', day: 'Wednesday', title: 'Rainforest + Beach / Casita', category: 'excursion', items: ['8:45 AM Rainforest Hike and Beach', 'All 4 except Dad', '9:00 AM Casita for Dad'] },
-  { date: '2026-06-04', day: 'Thursday', title: 'At Sea', category: 'cruise', items: ['At sea day'] },
-  { date: '2026-06-05', day: 'Friday', title: 'At Sea', category: 'cruise', items: ['At sea day'] },
-  { date: '2026-06-06', day: 'Saturday', title: 'Disney World Resort Stay Begins', category: 'hotel', items: ['Disembark cruise', 'Pick up Avis rental car at Port Canaveral at 10:00 AM', 'Check in at Buena Vista Suites Orlando'] },
-  { date: '2026-06-07', day: 'Sunday', title: 'Orlando Day', category: 'resort', items: ['Resort / Orlando day'] },
-  { date: '2026-06-08', day: 'Monday', title: 'Orlando Day', category: 'resort', items: ['Resort / Orlando day'] },
-  { date: '2026-06-09', day: 'Tuesday', title: 'Final Orlando Day', category: 'resort', items: ['Final resort / Orlando day', 'Pack for flight home'] },
-  { date: '2026-06-10', day: 'Wednesday', title: 'Flight Home', category: 'flight', items: ['Drop off Avis rental car at MCO at 6:30 AM', 'JetBlue Flight 2821: MCO 9:00 AM → LAS 11:15 AM'] }
-];
-
-const flights = [
-  {
-    direction: 'Outbound', airline: 'Southwest', flightNumber: 'WN852', confirmation: 'B68VX7', route: 'LAS → MCO', depart: 'May 28, 2026 • 12:40 PM', arrive: 'May 28, 2026 • 8:15 PM', terminal: '',
-    passengers: [
-      { name: 'Robert J Speciale', seat: '02F - Extra Legroom', rapidRewards: '367493490', ticket: '5262140927375' },
-      { name: 'Barbara A Speciale', seat: '02E - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '5262140927373' },
-      { name: 'Aurora Speciale', seat: '02D - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '5262140927372' },
-      { name: 'Veronica Speciale', seat: '03D - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '5262140927376' },
-      { name: 'Daniel Speciale', seat: '03E - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '' }
-    ]
-  },
-  {
-    direction: 'Return', airline: 'JetBlue', flightNumber: '2821', confirmation: 'UKYPDV', route: 'MCO → LAS', depart: 'Jun 10, 2026 • 9:00 AM', arrive: 'Jun 10, 2026 • 11:15 AM', terminal: 'Terminal C', passengers: []
-  }
-];
-
-const hotels = [
-  {
-    name: 'Orlando Airport Hotel', type: 'Arrival Night', checkIn: 'May 28, 2026 • 4:00 PM', checkOut: 'May 29, 2026', duration: '1 night', address: '9300 Jeff Fuqua Boulevard, Orlando, FL 32827, USA', phone: '+1 407-825-1234', confirmation: '979121934'
-  },
-  {
-    name: 'Buena Vista Suites Orlando', type: 'Disney Area Stay', checkIn: 'Sat, Jun 6, 2026', checkOut: 'Wed, Jun 10, 2026', duration: '4 nights', address: '8203 World Center Dr, Orlando, FL 32821', phone: '(407) 239-8588', confirmation: '6765960773'
-  }
-];
-
-const cruise = {
-  ship: 'Adventure of the Seas',
-  dates: 'May 29 - Jun 6, 2026',
-  rooms: [
-    { reservation: '6782731', room: 'Balcony 7592', people: 'Barbara, Aurora, Veronica' },
-    { reservation: '6783125', room: 'Balcony 7566', people: 'Robert and Daniel' }
-  ]
-};
-
-const transportation = [
-  {
-    title: 'Cruise Transportation Package', provider: 'MCO to Port Canaveral', order: 'O-3038693', date: 'Fri, May 29, 2026', details: ['Route: One-Way, MCO to Port', 'Cruise Ship: Adventure of the Seas', 'Cruise Dates: May 29 - Jun 6, 2026'], contact: 'Robert Speciale • robert.speciale@gmail.com • (702) 354-4738'
-  },
-  {
-    title: 'Avis Rental Car Pickup', provider: 'Port Canaveral Shuttle Service, P3F', order: '', date: 'Sat, Jun 6, 2026 • 10:00 AM', details: ['6650 N Atlantic Ave, Port Canaveral, FL 32920 US', '(1) 321-783-3643', 'Sat 8:00 AM - 3:00 PM'], contact: ''
-  },
-  {
-    title: 'Avis Rental Car Drop-Off', provider: 'Orlando Intl Airport, MCO', order: '', date: 'Wed, Jun 10, 2026 • 6:30 AM', details: ['1 Jeff Fuqua Blvd, Orlando, FL 32827 US', '(1) 407-825-3700', 'Open 24 hours'], contact: ''
-  }
-];
-
-
-const icons = { flight:'✈️', hotel:'🏨', cruise:'🚢', island:'✨', port:'📍', excursion:'🎟️', resort:'🏰', prep:'📋' };
-const fmt = iso => new Intl.DateTimeFormat('en-US', { month:'short', day:'numeric' }).format(new Date(`${iso}T12:00:00`));
-const todayIso = () => new Date().toISOString().slice(0,10);
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function upcoming() { return timeline.find(d => d.date >= todayIso()) || timeline[0]; }
-function timelineCard(day) { return `<article class="timeline-card ${esc(day.category)}"><div class="date-badge"><span>${fmt(day.date)}</span><small>${esc(day.day)}</small></div><div class="timeline-body"><div class="timeline-title"><span class="emoji-icon">${icons[day.category]||'📅'}</span><h3>${esc(day.title)}</h3></div><ul>${day.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`; }
-function detailCard(icon, eyebrow, title, body) { return `<article class="detail-card card"><div class="detail-heading"><div class="icon-bubble"><span class="emoji-icon">${icon}</span></div><div><p>${esc(eyebrow)}</p><h3>${esc(title)}</h3></div></div>${body}</article>`; }
-function render(q='') {
-  const up = upcoming();
-  const query = q.trim().toLowerCase();
-  const filtered = !query ? timeline : timeline.filter(d => `${d.title} ${d.day} ${d.items.join(' ')}`.toLowerCase().includes(query));
-  document.getElementById('root').innerHTML = `<main><div class="app-shell">
-    <nav class="topbar"><div class="brand"><span class="emoji-icon">🏰</span><span>Vacation Dashboard</span></div><div class="search-box"><span>🔎</span><input id="search" value="${esc(q)}" placeholder="Search plans, dates, people..." /></div></nav>
-    <section class="hero card glow"><div class="hero-copy"><p class="eyebrow"><span>✨</span> Magical Vacation Command Center</p><h1>${esc(trip.title)}</h1><p class="subtitle">${esc(trip.subtitle)}</p><div class="next-pill"><span>📅</span><span>Next up: <strong>${fmt(up.date)} — ${esc(up.title)}</strong></span></div></div><div class="hero-panel">${trip.heroStats.map(s=>`<div class="stat"><strong>${esc(s.value)}</strong><span>${esc(s.label)}</span></div>`).join('')}</div></section>
-    <section class="section"><div class="section-title"><h2>Trip Timeline</h2><p>May 27 through June 10</p></div><div class="timeline-grid">${filtered.map(timelineCard).join('')}</div></section>
-    <section class="section two-col"><div><div class="section-title"><h2>Hotels</h2><p>Arrival and Disney-area stays</p></div><div class="stack">${hotels.map(h=>detailCard('🏨',h.type,h.name,`<p><strong>Check-in:</strong> ${esc(h.checkIn)}</p><p><strong>Check-out:</strong> ${esc(h.checkOut)}</p><p><strong>Address:</strong> ${esc(h.address)}</p><p><strong>Phone:</strong> ${esc(h.phone)}</p><p><strong>Confirmation:</strong> ${esc(h.confirmation)}</p>`)).join('')}</div></div><div><div class="section-title"><h2>Cruise</h2><p>Adventure of the Seas</p></div>${detailCard('🚢',cruise.dates,cruise.ship,`<div class="rooms">${cruise.rooms.map(r=>`<div class="room"><span>${esc(r.room)}</span><strong>Reservation ${esc(r.reservation)}</strong><p>${esc(r.people)}</p></div>`).join('')}</div>`)}${detailCard('👨‍👩‍👧‍👦','Travel Party','Family View',`<div class="family-grid">${trip.party.map(p=>`<span>${esc(p)}</span>`).join('')}</div>`)}</div></section>
-    <section class="section"><div class="section-title"><h2>Travel Details</h2><p>Flights, shuttle, and rental car</p></div><div class="detail-grid">${flights.map(f=>detailCard('✈️',f.direction,`${f.airline} ${f.flightNumber}`,`<div class="route"><span>${esc(f.route)}</span><span>›</span></div><p><strong>Depart:</strong> ${esc(f.depart)}</p><p><strong>Arrive:</strong> ${esc(f.arrive)}</p><p><strong>Confirmation:</strong> ${esc(f.confirmation)}</p>${f.terminal?`<p><strong>Terminal:</strong> ${esc(f.terminal)}</p>`:''}${f.passengers.length?`<div class="passengers">${f.passengers.map(p=>`<span>${esc(p.name)} • ${esc(p.seat)}</span>`).join('')}</div>`:''}`)).join('')}${transportation.map(i=>detailCard(i.title.includes('Avis')?'🚗':'🚢',i.provider,i.title,`<p><strong>Date:</strong> ${esc(i.date)}</p>${i.order?`<p><strong>Order ID:</strong> ${esc(i.order)}</p>`:''}<ul class="mini-list">${i.details.map(d=>`<li>${esc(d)}</li>`).join('')}</ul>${i.contact?`<p class="muted">${esc(i.contact)}</p>`:''}`)).join('')}</div></section>
-  </div></main>`;
-  const input = document.getElementById('search'); input.focus(); input.setSelectionRange(input.value.length,input.value.length); input.addEventListener('input', e=>render(e.target.value));
-}
-render();
-</script>
-</body></html>
+const trip={title:'Speciale Family Vacation',subtitle:'Orlando • Adventure of the Seas • Disney-area Resort Stay',startDate:'2026-05-28',endDate:'2026-06-10',countdownTarget:'2026-05-28T12:40:00-07:00',party:['Robert','Barbara','Aurora','Veronica','Daniel'],heroStats:[{label:'Travelers',value:'5'},{label:'Trip Days',value:'14'},{label:'Cruise Nights',value:'8'},{label:'Hotels',value:'2'}]};
+const phases=[{name:'Travel Day',range:'May 28–29',start:'2026-05-28',end:'2026-05-29',icon:'✈️',description:'Fly from Las Vegas to Orlando, airport hotel, and shuttle to Port Canaveral.'},{name:'Cruise Adventure',range:'May 29–Jun 6',start:'2026-05-29',end:'2026-06-06',icon:'🚢',description:'Adventure of the Seas with CocoCay, San Juan, St. Thomas, St. Maarten, and sea days.'},{name:'Disney Resort Stay',range:'Jun 6–10',start:'2026-06-06',end:'2026-06-10',icon:'🏰',description:'Buena Vista Suites, rental car, Orlando time, and final vacation days.'},{name:'Journey Home',range:'Jun 10',start:'2026-06-10',end:'2026-06-10',icon:'🧳',description:'Avis drop-off at MCO and JetBlue flight home to Las Vegas.'}];
+const timeline=[
+{date:'2026-05-27',day:'Wednesday',title:'Final Prep Day',category:'prep',items:['Pack documents','Confirm transportation','Check flight status']},
+{date:'2026-05-28',day:'Thursday',title:'Fly to Orlando',category:'flight',items:['Southwest WN852: LAS 12:40 PM → MCO 8:15 PM','Check in at Orlando airport hotel after arrival']},
+{date:'2026-05-29',day:'Friday',title:'Cruise Departure',category:'cruise',items:['Check out of Orlando airport hotel','Go Port shuttle: MCO to Port Canaveral','Board Adventure of the Seas']},
+{date:'2026-05-30',day:'Saturday',title:'Perfect Day at CocoCay',category:'island',items:['Perfect Day at CocoCay']},
+{date:'2026-05-31',day:'Sunday',title:'At Sea',category:'cruise',items:['At sea day']},
+{date:'2026-06-01',day:'Monday',title:'San Juan',category:'port',items:['1:00 PM San Juan','All 5 going']},
+{date:'2026-06-02',day:'Tuesday',title:'Skyride + Magen’s Bay',category:'excursion',items:['8:30 AM Skyride','Drake’s Seat and Magen’s Bay','All 5 going']},
+{date:'2026-06-03',day:'Wednesday',title:'Rainforest + Beach / Casita',category:'excursion',items:['8:45 AM Rainforest Hike and Beach','All 4 except Dad','9:00 AM Casita for Dad']},
+{date:'2026-06-04',day:'Thursday',title:'At Sea',category:'cruise',items:['At sea day']},
+{date:'2026-06-05',day:'Friday',title:'At Sea',category:'cruise',items:['At sea day']},
+{date:'2026-06-06',day:'Saturday',title:'Disney World Resort Stay Begins',category:'hotel',items:['Disembark cruise','Pick up Avis rental car at Port Canaveral at 10:00 AM','Check in at Buena Vista Suites Orlando']},
+{date:'2026-06-07',day:'Sunday',title:'Orlando Day',category:'resort',items:['Resort / Orlando day']},
+{date:'2026-06-08',day:'Monday',title:'Orlando Day',category:'resort',items:['Resort / Orlando day']},
+{date:'2026-06-09',day:'Tuesday',title:'Final Orlando Day',category:'resort',items:['Final resort / Orlando day','Pack for flight home']},
+{date:'2026-06-10',day:'Wednesday',title:'Flight Home',category:'flight',items:['Drop off Avis rental car at MCO at 6:30 AM','JetBlue Flight 2821: MCO 9:00 AM → LAS 11:15 AM']}];
+const flights=[{direction:'Outbound',airline:'Southwest',flightNumber:'WN852',confirmation:'B68VX7',route:'LAS → MCO',depart:'May 28, 2026 • 12:40 PM',arrive:'May 28, 2026 • 8:15 PM',terminal:'',passengers:[{name:'Robert J Speciale',seat:'02F - Extra Legroom'},{name:'Barbara A Speciale',seat:'02E - Extra Legroom'},{name:'Aurora Speciale',seat:'02D - Extra Legroom'},{name:'Veronica Speciale',seat:'03D - Extra Legroom'},{name:'Daniel Speciale',seat:'01E - Extra Legroom'}]},{direction:'Return',airline:'JetBlue',flightNumber:'2821',confirmation:'UKYPDV',route:'MCO → LAS',depart:'Jun 10, 2026 • 9:00 AM',arrive:'Jun 10, 2026 • 11:15 AM',terminal:'Terminal C',passengers:[{name:'Robert Speciale',seat:'26F'},{name:'Barbara Speciale',seat:'26D'},{name:'Aurora Speciale',seat:'26B'},{name:'Daniel Speciale',seat:'26C'},{name:'Veronica Speciale',seat:'26E'}]}];
+const hotels=[{name:'Orlando Airport Hotel',type:'Arrival Night',checkIn:'May 28, 2026 • 4:00 PM',checkOut:'May 29, 2026',address:'9300 Jeff Fuqua Boulevard, Orlando, FL 32827, USA',phone:'+1 407-825-1234',confirmation:'979121934'},{name:'Buena Vista Suites Orlando',type:'Disney Area Stay',checkIn:'Sat, Jun 6, 2026',checkOut:'Wed, Jun 10, 2026',address:'8203 World Center Dr, Orlando, FL 32821',phone:'(407) 239-8588',confirmation:'6765960773'}];
+const cruise={ship:'Adventure of the Seas',dates:'May 29 - Jun 6, 2026',rooms:[{reservation:'6782731',room:'Balcony 7592',people:'Barbara, Aurora, Veronica'},{reservation:'6783125',room:'Balcony 7566',people:'Robert and Daniel'}]};
+const transportation=[{title:'Cruise Transportation Package',provider:'Go Port',order:'O-3038693',date:'Fri, May 29, 2026',details:['Route: One-Way, MCO to Port','Airport to Cruise Shuttle: 10:00 AM to 12:30 PM','Traveler(s): 3 Adults, 2 Children','Cruise Ship: Adventure of the Seas'],contact:'Go Port: (855) 855-9769 • Robert Speciale • robert.speciale@gmail.com'},{title:'Avis Rental Car Pickup',provider:'Port Canaveral Shuttle Service, P3F',order:'',date:'Sat, Jun 6, 2026 • 10:00 AM',details:['6650 N Atlantic Ave, Port Canaveral, FL 32920 US','(1) 321-783-3643','Sat 8:00 AM - 3:00 PM'],contact:''},{title:'Avis Rental Car Drop-Off',provider:'Orlando Intl Airport, MCO',order:'',date:'Wed, Jun 10, 2026 • 6:30 AM',details:['1 Jeff Fuqua Blvd, Orlando, FL 32827 US','(1) 407-825-3700','Open 24 hours'],contact:''}];
+const icons={flight:'✈️',hotel:'🏨',cruise:'🚢',island:'✨',port:'📍',excursion:'🎟️',resort:'🏰',prep:'📋'};
+const fmt=iso=>new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric'}).format(new Date(`${iso}T12:00:00`));
+const fullFmt=iso=>new Intl.DateTimeFormat('en-US',{weekday:'long',month:'long',day:'numeric'}).format(new Date(`${iso}T12:00:00`));
+const localIso=()=>{const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function upcoming(){const now=localIso();return timeline.find(d=>d.date>=now)||timeline[timeline.length-1]}
+function todaysPlan(){const today=localIso(); const exact=timeline.find(d=>d.date===today); if(exact) return {heading:`Today’s Itinerary`,day:exact}; if(today<trip.startDate) return {heading:'Next Up',day:upcoming()}; return {heading:'Trip Complete',day:{date:trip.endDate,day:'Wednesday',title:'Welcome home!',items:['The adventure is complete. Time to unpack, recover, and relive the highlights.']}}}
+function tripProgress(){const start=new Date(`${trip.startDate}T00:00:00`), end=new Date(`${trip.endDate}T23:59:59`), now=new Date(); return Math.max(0,Math.min(100,((now-start)/(end-start))*100))}
+function currentPhase(){const t=localIso();return phases.find(p=>t>=p.start&&t<=p.end)?.name||''}
+function countdownParts(){const target=new Date(trip.countdownTarget), now=new Date(); let ms=target-now; if(ms<=0) return {done:true,days:0,hours:0,minutes:0,seconds:0}; const days=Math.floor(ms/86400000); ms-=days*86400000; const hours=Math.floor(ms/3600000); ms-=hours*3600000; const minutes=Math.floor(ms/60000); ms-=minutes*60000; const seconds=Math.floor(ms/1000); return {done:false,days,hours,minutes,seconds}}
+function timelineCard(day){const today=localIso();return `<article class="timeline-card ${esc(day.category)} ${day.date===today?'today':''}"><div class="date-badge"><span>${fmt(day.date)}</span><small>${esc(day.day)}</small></div><div class="timeline-body"><div class="timeline-title"><span>${icons[day.category]||'📅'}</span><h3>${esc(day.title)}</h3></div><ul>${day.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`}
+function detailCard(icon,eyebrow,title,body){return `<article class="detail-card card"><div class="detail-heading"><div class="icon-bubble">${icon}</div><div><p>${esc(eyebrow)}</p><h3>${esc(title)}</h3></div></div>${body}</article>`}
+function countdownHtml(){const c=countdownParts(); if(c.done) return `<div class="stat countdown-card"><strong>Vacation Mode</strong><span>The countdown has landed ✨</span></div>`; return `<div class="stat countdown-card"><strong>Countdown to Vacation</strong><div class="countdown-grid"><div class="count-box"><b>${c.days}</b><span>Days</span></div><div class="count-box"><b>${c.hours}</b><span>Hours</span></div><div class="count-box"><b>${c.minutes}</b><span>Minutes</span></div><div class="count-box"><b>${c.seconds}</b><span>Seconds</span></div></div></div>`}
+function phaseCard(p){const active=currentPhase()===p.name;return `<article class="phase-card card ${active?'active':''}"><span class="badge">${esc(p.range)}</span><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><span class="big-icon">${p.icon}</span></article>`}
+function render(q=''){const up=upcoming();const today=todaysPlan();const query=q.trim().toLowerCase();const filtered=!query?timeline:timeline.filter(d=>`${d.title} ${d.day} ${d.items.join(' ')}`.toLowerCase().includes(query));document.getElementById('root').innerHTML=`<main><div class="app-shell"><nav class="topbar"><div class="brand"><span>🏰</span><span>Vacation Dashboard</span></div><div class="search-box"><span>🔎</span><input id="search" value="${esc(q)}" placeholder="Search plans, dates, people..." /></div></nav><section class="hero card glow"><div class="hero-copy"><p class="eyebrow"><span>✨</span> Magical Vacation Command Center</p><h1>${esc(trip.title)}</h1><p class="subtitle">${esc(trip.subtitle)}</p><div class="next-pill"><span>📅</span><span>Next up: <strong>${fmt(up.date)} — ${esc(up.title)}</strong></span></div></div><div class="hero-panel">${trip.heroStats.map(s=>`<div class="stat"><strong>${esc(s.value)}</strong><span>${esc(s.label)}</span></div>`).join('')}${countdownHtml()}</div></section><section class="progress-card card"><div class="progress-top"><div><p class="eyebrow">Resort-style trip tracker</p><h2 style="margin:.1rem 0;font-size:2rem;letter-spacing:-.05em">Animated Timeline Progress</h2></div><strong>${Math.round(tripProgress())}% through trip window</strong></div><div class="progress-track"><div class="progress-fill" style="width:${tripProgress()}%"></div></div><div class="progress-labels"><span>May 28</span><span>May 29 Cruise</span><span>Jun 6 Resort</span><span>Jun 10 Home</span></div></section><section class="section two-col"><div class="today-card card"><p class="eyebrow">${esc(today.heading)}</p><h3>${fullFmt(today.day.date)} — ${esc(today.day.title)}</h3><ul>${today.day.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div><div><div class="section-title"><h2>Trip Phases</h2><p>Resort guide view</p></div><div class="phase-grid">${phases.map(phaseCard).join('')}</div></div></section><section class="section"><div class="section-title"><h2>Trip Timeline</h2><p>May 27 through June 10</p></div><div class="timeline-grid">${filtered.map(timelineCard).join('')}</div></section><section class="section two-col"><div><div class="section-title"><h2>Hotels</h2><p>Arrival and Disney-area stays</p></div><div class="stack">${hotels.map(h=>detailCard('🏨',h.type,h.name,`<p><strong>Check-in:</strong> ${esc(h.checkIn)}</p><p><strong>Check-out:</strong> ${esc(h.checkOut)}</p><p><strong>Address:</strong> ${esc(h.address)}</p><p><strong>Phone:</strong> ${esc(h.phone)}</p><p><strong>Confirmation:</strong> ${esc(h.confirmation)}</p>`)).join('')}</div></div><div><div class="section-title"><h2>Cruise</h2><p>Adventure of the Seas</p></div>${detailCard('🚢',cruise.dates,cruise.ship,`<div class="rooms">${cruise.rooms.map(r=>`<div class="room"><span>${esc(r.room)}</span><strong>Reservation ${esc(r.reservation)}</strong><p>${esc(r.people)}</p></div>`).join('')}</div>`)}${detailCard('👨‍👩‍👧‍👦','Travel Party','Family View',`<div class="family-grid">${trip.party.map(p=>`<span>${esc(p)}</span>`).join('')}</div>`)}</div></section><section class="section"><div class="section-title"><h2>Travel Details</h2><p>Flights, shuttle, and rental car</p></div><div class="detail-grid">${flights.map(f=>detailCard('✈️',f.direction,`${f.airline} ${f.flightNumber}`,`<div class="route"><span>${esc(f.route)}</span><span>›</span></div><p><strong>Depart:</strong> ${esc(f.depart)}</p><p><strong>Arrive:</strong> ${esc(f.arrive)}</p><p><strong>Confirmation:</strong> ${esc(f.confirmation)}</p>${f.terminal?`<p><strong>Terminal:</strong> ${esc(f.terminal)}</p>`:''}${f.passengers.length?`<div class="passengers">${f.passengers.map(p=>`<span>${esc(p.name)} • ${esc(p.seat)}</span>`).join('')}</div>`:''}`)).join('')}${transportation.map(i=>detailCard(i.title.includes('Avis')?'🚗':'🚢',i.provider,i.title,`<p><strong>Date:</strong> ${esc(i.date)}</p>${i.order?`<p><strong>Order ID:</strong> ${esc(i.order)}</p>`:''}<ul class="mini-list">${i.details.map(d=>`<li>${esc(d)}</li>`).join('')}</ul>${i.contact?`<p class="muted">${esc(i.contact)}</p>`:''}`)).join('')}</div></section><p class="footer-note">Static Vercel-friendly dashboard • replace index.html to update</p></div></main>`;const input=document.getElementById('search');input.focus();input.setSelectionRange(input.value.length,input.value.length);input.addEventListener('input',e=>render(e.target.value))}
+render();setInterval(()=>{const q=document.getElementById('search')?.value||'';render(q)},1000);
+</script></body></html>
