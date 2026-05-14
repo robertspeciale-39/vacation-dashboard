@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vacation Dashboard</title>
+  <style>:root {
+  --ink: #35291f;
+  --muted: #76675a;
+  --cream: #fff7e8;
+  --card: rgba(255, 255, 255, 0.82);
+  --gold: #f6c453;
+  --rose: #ff8fa3;
+  --sky: #6ecff6;
+  --teal: #4fb6a8;
+  --lavender: #b79ced;
+  --shadow: 0 24px 70px rgba(78, 52, 24, 0.16);
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); background: radial-gradient(circle at top left, #fff1bc, transparent 32rem), radial-gradient(circle at 80% 15%, #ffd3dc, transparent 24rem), linear-gradient(135deg, #fffaf0 0%, #edf9ff 48%, #fff4fb 100%); min-height: 100vh; }
+main { padding: 28px; }
+.app-shell { max-width: 1220px; margin: 0 auto; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 22px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -0.03em; font-size: 1.25rem; }
+.search-box { flex: 1; max-width: 420px; background: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 10px 30px rgba(74, 50, 24, .08); border-radius: 999px; display: flex; align-items: center; gap: 10px; padding: 11px 16px; }
+.search-box input { border: 0; outline: 0; background: transparent; width: 100%; font-size: .95rem; color: var(--ink); }
+.card { background: var(--card); border: 1px solid rgba(255,255,255,.8); border-radius: 30px; box-shadow: var(--shadow); backdrop-filter: blur(16px); }
+.glow { position: relative; overflow: hidden; }
+.glow::after { content: ''; position: absolute; width: 210px; height: 210px; right: -70px; top: -70px; background: radial-gradient(circle, rgba(246,196,83,.55), transparent 68%); pointer-events: none; }
+.hero { display: grid; grid-template-columns: 1.35fr .65fr; gap: 24px; padding: 38px; margin-bottom: 30px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; font-size: .78rem; font-weight: 900; color: #9b5d00; letter-spacing: .12em; margin: 0 0 10px; }
+h1 { font-size: clamp(2.4rem, 5vw, 5rem); line-height: .95; margin: 0; letter-spacing: -0.08em; }
+.subtitle { color: var(--muted); font-size: 1.15rem; margin: 16px 0 24px; }
+.next-pill { display: inline-flex; align-items: center; gap: 10px; background: #fff4cd; color: #5e4212; border: 1px solid #ffe39b; padding: 12px 16px; border-radius: 999px; }
+.hero-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: center; position: relative; z-index: 1; }
+.stat { background: rgba(255,255,255,.7); border-radius: 24px; padding: 20px; text-align: center; }
+.stat strong { display: block; font-size: 2.15rem; }
+.stat span { color: var(--muted); font-size: .86rem; font-weight: 700; }
+.section { margin: 34px 0; }
+.section-title { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 0 0 16px; }
+.section-title h2 { margin: 0; font-size: 1.8rem; letter-spacing: -0.04em; }
+.section-title p { margin: 0; color: var(--muted); }
+.timeline-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.timeline-card { display: grid; grid-template-columns: 104px 1fr; gap: 14px; padding: 16px; border-radius: 26px; background: rgba(255,255,255,.75); border: 1px solid rgba(255,255,255,.82); box-shadow: 0 15px 38px rgba(66,43,24,.09); }
+.date-badge { border-radius: 22px; background: linear-gradient(135deg, #fff, #fff2c8); display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 90px; text-align: center; border: 1px solid #ffe2a0; }
+.date-badge span { font-weight: 950; font-size: 1.2rem; }
+.date-badge small { color: var(--muted); font-weight: 700; }
+.timeline-title { display: flex; align-items: center; gap: 9px; }
+.timeline-title h3 { margin: 0; font-size: 1.05rem; }
+ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+li { margin: 5px 0; }
+.flight .date-badge { background: linear-gradient(135deg, #fff, #dff6ff); border-color: #bdeeff; }
+.hotel .date-badge, .resort .date-badge { background: linear-gradient(135deg, #fff, #ffe2ed); border-color: #ffc8d8; }
+.cruise .date-badge, .island .date-badge { background: linear-gradient(135deg, #fff, #dcfbf6); border-color: #b8eee6; }
+.excursion .date-badge, .port .date-badge { background: linear-gradient(135deg, #fff, #eee6ff); border-color: #d8c8ff; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.stack { display: grid; gap: 18px; }
+.detail-card { padding: 22px; margin-bottom: 18px; }
+.detail-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.icon-bubble { width: 44px; height: 44px; border-radius: 16px; background: linear-gradient(135deg, #ffe89b, #ffc1d0); display: grid; place-items: center; }
+.detail-heading p { margin: 0 0 2px; color: #9b5d00; font-size: .78rem; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+.detail-heading h3 { margin: 0; font-size: 1.2rem; }
+.detail-card p { color: var(--muted); line-height: 1.45; margin: 8px 0; }
+.detail-card strong { color: var(--ink); }
+.route { display: flex; justify-content: space-between; align-items: center; background: #f3fbff; border-radius: 18px; padding: 12px 14px; font-weight: 900; margin-bottom: 12px; color: #25637b; }
+.passengers, .family-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.passengers span, .family-grid span { background: #fff5d6; border: 1px solid #ffe6a4; color: #6a4910; padding: 8px 10px; border-radius: 999px; font-size: .84rem; font-weight: 800; }
+.mini-list { background: rgba(255,255,255,.45); border-radius: 18px; padding: 12px 12px 12px 32px; }
+.rooms { display: grid; gap: 12px; }
+.room { padding: 16px; border-radius: 22px; background: linear-gradient(135deg, #ecfffb, #fff); border: 1px solid #c8f3ed; }
+.room span { display: block; font-weight: 950; font-size: 1.1rem; }
+.room p { margin-bottom: 0; }
+.muted { color: var(--muted); font-size: .92rem; }
+@media (max-width: 900px) { main { padding: 18px; } .topbar, .hero, .two-col { grid-template-columns: 1fr; flex-direction: column; align-items: stretch; } .hero { padding: 28px; } .timeline-grid, .detail-grid { grid-template-columns: 1fr; } .section-title { align-items: start; flex-direction: column; } .search-box { max-width: none; } }
+@media (max-width: 560px) { .timeline-card { grid-template-columns: 1fr; } .hero-panel { grid-template-columns: 1fr 1fr; } .next-pill { border-radius: 22px; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const trip = {
+  title: 'Speciale Family Vacation',
+  subtitle: 'Orlando • Adventure of the Seas • Resort Stay',
+  startDate: '2026-05-28',
+  endDate: '2026-06-10',
+  party: ['Robert', 'Barbara', 'Aurora', 'Veronica', 'Daniel'],
+  heroStats: [
+    { label: 'Travelers', value: '5' },
+    { label: 'Trip Days', value: '14' },
+    { label: 'Cruise Nights', value: '8' },
+    { label: 'Hotels', value: '2' }
+  ]
+};
+
+const timeline = [
+  { date: '2026-05-27', day: 'Wednesday', title: 'Final Prep Day', category: 'prep', items: ['Pack documents', 'Confirm transportation', 'Check flight status'] },
+  { date: '2026-05-28', day: 'Thursday', title: 'Fly to Orlando', category: 'flight', items: ['Southwest WN852: LAS 12:40 PM → MCO 8:15 PM', 'Check in at Orlando airport hotel after arrival'] },
+  { date: '2026-05-29', day: 'Friday', title: 'Cruise Departure', category: 'cruise', items: ['Check out of Orlando airport hotel', 'Cruise transportation package: MCO to Port Canaveral', 'Board Adventure of the Seas'] },
+  { date: '2026-05-30', day: 'Saturday', title: 'Perfect Day at CocoCay', category: 'island', items: ['Perfect Day at CocoCay'] },
+  { date: '2026-05-31', day: 'Sunday', title: 'At Sea', category: 'cruise', items: ['At sea day'] },
+  { date: '2026-06-01', day: 'Monday', title: 'San Juan', category: 'port', items: ['1:00 PM San Juan', 'All 5 going'] },
+  { date: '2026-06-02', day: 'Tuesday', title: 'Skyride + Magen’s Bay', category: 'excursion', items: ['8:30 AM Skyride', 'Drake’s Seat and Magen’s Bay', 'All 5 going'] },
+  { date: '2026-06-03', day: 'Wednesday', title: 'Rainforest + Beach / Casita', category: 'excursion', items: ['8:45 AM Rainforest Hike and Beach', 'All 4 except Dad', '9:00 AM Casita for Dad'] },
+  { date: '2026-06-04', day: 'Thursday', title: 'At Sea', category: 'cruise', items: ['At sea day'] },
+  { date: '2026-06-05', day: 'Friday', title: 'At Sea', category: 'cruise', items: ['At sea day'] },
+  { date: '2026-06-06', day: 'Saturday', title: 'Disney World Resort Stay Begins', category: 'hotel', items: ['Disembark cruise', 'Pick up Avis rental car at Port Canaveral at 10:00 AM', 'Check in at Buena Vista Suites Orlando'] },
+  { date: '2026-06-07', day: 'Sunday', title: 'Orlando Day', category: 'resort', items: ['Resort / Orlando day'] },
+  { date: '2026-06-08', day: 'Monday', title: 'Orlando Day', category: 'resort', items: ['Resort / Orlando day'] },
+  { date: '2026-06-09', day: 'Tuesday', title: 'Final Orlando Day', category: 'resort', items: ['Final resort / Orlando day', 'Pack for flight home'] },
+  { date: '2026-06-10', day: 'Wednesday', title: 'Flight Home', category: 'flight', items: ['Drop off Avis rental car at MCO at 6:30 AM', 'JetBlue Flight 2821: MCO 9:00 AM → LAS 11:15 AM'] }
+];
+
+const flights = [
+  {
+    direction: 'Outbound', airline: 'Southwest', flightNumber: 'WN852', confirmation: 'B68VX7', route: 'LAS → MCO', depart: 'May 28, 2026 • 12:40 PM', arrive: 'May 28, 2026 • 8:15 PM', terminal: '',
+    passengers: [
+      { name: 'Robert J Speciale', seat: '02F - Extra Legroom', rapidRewards: '367493490', ticket: '5262140927375' },
+      { name: 'Barbara A Speciale', seat: '02E - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '5262140927373' },
+      { name: 'Aurora Speciale', seat: '02D - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '5262140927372' },
+      { name: 'Veronica Speciale', seat: '03D - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '5262140927376' },
+      { name: 'Daniel Speciale', seat: '03E - Extra Legroom', rapidRewards: 'Join or Log in', ticket: '' }
+    ]
+  },
+  {
+    direction: 'Return', airline: 'JetBlue', flightNumber: '2821', confirmation: 'UKYPDV', route: 'MCO → LAS', depart: 'Jun 10, 2026 • 9:00 AM', arrive: 'Jun 10, 2026 • 11:15 AM', terminal: 'Terminal C', passengers: []
+  }
+];
+
+const hotels = [
+  {
+    name: 'Orlando Airport Hotel', type: 'Arrival Night', checkIn: 'May 28, 2026 • 4:00 PM', checkOut: 'May 29, 2026', duration: '1 night', address: '9300 Jeff Fuqua Boulevard, Orlando, FL 32827, USA', phone: '+1 407-825-1234', confirmation: '979121934'
+  },
+  {
+    name: 'Buena Vista Suites Orlando', type: 'Disney Area Stay', checkIn: 'Sat, Jun 6, 2026', checkOut: 'Wed, Jun 10, 2026', duration: '4 nights', address: '8203 World Center Dr, Orlando, FL 32821', phone: '(407) 239-8588', confirmation: '6765960773'
+  }
+];
+
+const cruise = {
+  ship: 'Adventure of the Seas',
+  dates: 'May 29 - Jun 6, 2026',
+  rooms: [
+    { reservation: '6782731', room: 'Balcony 7592', people: 'Barbara, Aurora, Veronica' },
+    { reservation: '6783125', room: 'Balcony 7566', people: 'Robert and Daniel' }
+  ]
+};
+
+const transportation = [
+  {
+    title: 'Cruise Transportation Package', provider: 'MCO to Port Canaveral', order: 'O-3038693', date: 'Fri, May 29, 2026', details: ['Route: One-Way, MCO to Port', 'Cruise Ship: Adventure of the Seas', 'Cruise Dates: May 29 - Jun 6, 2026'], contact: 'Robert Speciale • robert.speciale@gmail.com • (702) 354-4738'
+  },
+  {
+    title: 'Avis Rental Car Pickup', provider: 'Port Canaveral Shuttle Service, P3F', order: '', date: 'Sat, Jun 6, 2026 • 10:00 AM', details: ['6650 N Atlantic Ave, Port Canaveral, FL 32920 US', '(1) 321-783-3643', 'Sat 8:00 AM - 3:00 PM'], contact: ''
+  },
+  {
+    title: 'Avis Rental Car Drop-Off', provider: 'Orlando Intl Airport, MCO', order: '', date: 'Wed, Jun 10, 2026 • 6:30 AM', details: ['1 Jeff Fuqua Blvd, Orlando, FL 32827 US', '(1) 407-825-3700', 'Open 24 hours'], contact: ''
+  }
+];
+
+
+const icons = { flight:'✈️', hotel:'🏨', cruise:'🚢', island:'✨', port:'📍', excursion:'🎟️', resort:'🏰', prep:'📋' };
+const fmt = iso => new Intl.DateTimeFormat('en-US', { month:'short', day:'numeric' }).format(new Date(`${iso}T12:00:00`));
+const todayIso = () => new Date().toISOString().slice(0,10);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function upcoming() { return timeline.find(d => d.date >= todayIso()) || timeline[0]; }
+function timelineCard(day) { return `<article class="timeline-card ${esc(day.category)}"><div class="date-badge"><span>${fmt(day.date)}</span><small>${esc(day.day)}</small></div><div class="timeline-body"><div class="timeline-title"><span class="emoji-icon">${icons[day.category]||'📅'}</span><h3>${esc(day.title)}</h3></div><ul>${day.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`; }
+function detailCard(icon, eyebrow, title, body) { return `<article class="detail-card card"><div class="detail-heading"><div class="icon-bubble"><span class="emoji-icon">${icon}</span></div><div><p>${esc(eyebrow)}</p><h3>${esc(title)}</h3></div></div>${body}</article>`; }
+function render(q='') {
+  const up = upcoming();
+  const query = q.trim().toLowerCase();
+  const filtered = !query ? timeline : timeline.filter(d => `${d.title} ${d.day} ${d.items.join(' ')}`.toLowerCase().includes(query));
+  document.getElementById('root').innerHTML = `<main><div class="app-shell">
+    <nav class="topbar"><div class="brand"><span class="emoji-icon">🏰</span><span>Vacation Dashboard</span></div><div class="search-box"><span>🔎</span><input id="search" value="${esc(q)}" placeholder="Search plans, dates, people..." /></div></nav>
+    <section class="hero card glow"><div class="hero-copy"><p class="eyebrow"><span>✨</span> Magical Vacation Command Center</p><h1>${esc(trip.title)}</h1><p class="subtitle">${esc(trip.subtitle)}</p><div class="next-pill"><span>📅</span><span>Next up: <strong>${fmt(up.date)} — ${esc(up.title)}</strong></span></div></div><div class="hero-panel">${trip.heroStats.map(s=>`<div class="stat"><strong>${esc(s.value)}</strong><span>${esc(s.label)}</span></div>`).join('')}</div></section>
+    <section class="section"><div class="section-title"><h2>Trip Timeline</h2><p>May 27 through June 10</p></div><div class="timeline-grid">${filtered.map(timelineCard).join('')}</div></section>
+    <section class="section two-col"><div><div class="section-title"><h2>Hotels</h2><p>Arrival and Disney-area stays</p></div><div class="stack">${hotels.map(h=>detailCard('🏨',h.type,h.name,`<p><strong>Check-in:</strong> ${esc(h.checkIn)}</p><p><strong>Check-out:</strong> ${esc(h.checkOut)}</p><p><strong>Address:</strong> ${esc(h.address)}</p><p><strong>Phone:</strong> ${esc(h.phone)}</p><p><strong>Confirmation:</strong> ${esc(h.confirmation)}</p>`)).join('')}</div></div><div><div class="section-title"><h2>Cruise</h2><p>Adventure of the Seas</p></div>${detailCard('🚢',cruise.dates,cruise.ship,`<div class="rooms">${cruise.rooms.map(r=>`<div class="room"><span>${esc(r.room)}</span><strong>Reservation ${esc(r.reservation)}</strong><p>${esc(r.people)}</p></div>`).join('')}</div>`)}${detailCard('👨‍👩‍👧‍👦','Travel Party','Family View',`<div class="family-grid">${trip.party.map(p=>`<span>${esc(p)}</span>`).join('')}</div>`)}</div></section>
+    <section class="section"><div class="section-title"><h2>Travel Details</h2><p>Flights, shuttle, and rental car</p></div><div class="detail-grid">${flights.map(f=>detailCard('✈️',f.direction,`${f.airline} ${f.flightNumber}`,`<div class="route"><span>${esc(f.route)}</span><span>›</span></div><p><strong>Depart:</strong> ${esc(f.depart)}</p><p><strong>Arrive:</strong> ${esc(f.arrive)}</p><p><strong>Confirmation:</strong> ${esc(f.confirmation)}</p>${f.terminal?`<p><strong>Terminal:</strong> ${esc(f.terminal)}</p>`:''}${f.passengers.length?`<div class="passengers">${f.passengers.map(p=>`<span>${esc(p.name)} • ${esc(p.seat)}</span>`).join('')}</div>`:''}`)).join('')}${transportation.map(i=>detailCard(i.title.includes('Avis')?'🚗':'🚢',i.provider,i.title,`<p><strong>Date:</strong> ${esc(i.date)}</p>${i.order?`<p><strong>Order ID:</strong> ${esc(i.order)}</p>`:''}<ul class="mini-list">${i.details.map(d=>`<li>${esc(d)}</li>`).join('')}</ul>${i.contact?`<p class="muted">${esc(i.contact)}</p>`:''}`)).join('')}</div></section>
+  </div></main>`;
+  const input = document.getElementById('search'); input.focus(); input.setSelectionRange(input.value.length,input.value.length); input.addEventListener('input', e=>render(e.target.value));
+}
+render();
+</script>
+</body></html>
